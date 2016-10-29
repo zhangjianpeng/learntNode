@@ -10,15 +10,19 @@ app.get('/',function(req,res,next){
 			}
 			var $=cheerio.load(sres.text);
 			var items=[];
-			$('#topic_list .topic_title').each(function(idx,element){
+			$('#topic_list .cell').each(function(idx,element){
 				var $element=$(element);
+				var $topic_title=$element.find('.topic_title');
+				var img=$element.find('.user_avatar > img')
 				items.push({
-					title:$element.attr('title'),
-					href:$element.attr('href')
+					title:$topic_title.attr('title'),
+					href:$topic_title.attr('href'),
+					author:img.attr('title')
 				});
 			});
 			res.send(items);
 	});
+
 });
 
 app.listen(3000,function(req,res){
